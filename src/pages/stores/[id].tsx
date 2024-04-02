@@ -10,11 +10,6 @@ import {
   Container,
   HStack,
   Input,
-  Modal,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalOverlay,
   Stack,
   Text,
   VStack,
@@ -23,6 +18,7 @@ import {
 import { partitionBy } from '../../utils/collections'
 import Image from 'next/image'
 import React, { createRef, useEffect, useMemo, useState } from 'react'
+import { ProductModal } from '../../components/product-modal'
 
 type Props = {
   store: Store
@@ -99,7 +95,7 @@ export default function StorePage({ store, products }: Props) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main style={{ backgroundColor: '#fafafa', minHeight: '100vh', marginBottom: 60 }}>
+      <main style={{ backgroundColor: '#fafafa', minHeight: '100vh' }}>
         <Stack margin={0} padding={2}>
           <Text fontWeight={'bold'} variant="subtitle1">
             {store.name}
@@ -191,54 +187,7 @@ export default function StorePage({ store, products }: Props) {
           </HStack>
         </Card> */}
       </main>
-
-      <Modal
-        motionPreset="slideInBottom"
-        onClose={() => setModalProduct(null)}
-        size={['full', 'md']}
-        isOpen={!!modalProduct}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>{modalProduct?.name}</ModalHeader>
-          <ModalCloseButton justifySelf={'center'} alignSelf={'center'} />
-          <Stack width={'100%'}>
-            <Image
-              src={'https://via.placeholder.com/150'}
-              width={150}
-              height={150}
-              quality={100}
-              priority={true}
-              alt="Picture of the author"
-              style={{
-                width: '100%',
-              }}
-            />
-          </Stack>
-          <Stack mb={20} p={4} spacing={4}>
-            <Text color={'gray.700'}>{modalProduct?.description}</Text>
-            <Text fontWeight={'bold'} color={'gray.700'}>
-              {modalProduct?.price ? formatPrice(modalProduct.price) : null}
-            </Text>
-          </Stack>
-          {/* TODO: enable when cart is implemented */}
-          {/* <Card bottom={0} position={'fixed'} width={'100%'}>
-            <HStack p={2}>
-              <CountInput />
-              <Button
-                width={'100%'}
-                flexGrow={1}
-                colorScheme="green"
-                onClick={() => {
-                  console.log('Add to cart')
-                }}
-              >
-                Adicionar
-              </Button>
-            </HStack>
-          </Card> */}
-        </ModalContent>
-      </Modal>
+      <ProductModal product={modalProduct} onClose={() => setModalProduct(null)} />
     </>
   )
 }
