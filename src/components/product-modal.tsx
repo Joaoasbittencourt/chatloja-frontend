@@ -47,22 +47,6 @@ export const ProductModal = ({ onClose, product }: Props) => {
             {product?.price ? formatPrice(product.price) : null}
           </Text>
         </Stack>
-        {/* TODO: enable when cart is implemented */}
-        {/* <Card bottom={0} position={'fixed'} width={'100%'}>
-      <HStack p={2}>
-        <CountInput />
-        <Button
-          width={'100%'}
-          flexGrow={1}
-          colorScheme="green"
-          onClick={() => {
-            console.log('Add to cart')
-          }}
-        >
-          Adicionar
-        </Button>
-      </HStack>
-    </Card> */}
       </ModalContent>
     </Modal>
   )

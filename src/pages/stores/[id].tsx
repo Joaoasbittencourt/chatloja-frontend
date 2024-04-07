@@ -2,49 +2,15 @@ import Head from 'next/head'
 import { getStore, getStoreProducts } from '../../api'
 import { GetServerSideProps } from 'next'
 import { Product, Store } from '../../types'
-import { formatPrice } from '../../utils/numbers'
-import {
-  Badge,
-  Button,
-  Card,
-  Container,
-  HStack,
-  Input,
-  Stack,
-  Text,
-  VStack,
-  useNumberInput,
-} from '@chakra-ui/react'
+import { Badge, Container, HStack, Stack, Text } from '@chakra-ui/react'
 import { partitionBy } from '../../utils/collections'
-import Image from 'next/image'
 import React, { createRef, useEffect, useMemo, useState } from 'react'
 import { ProductModal } from '../../components/product-modal'
+import { ProductCard } from '../../components/product-card'
 
 type Props = {
   store: Store
   products: Product[]
-}
-
-const CountInput = () => {
-  const { getInputProps, getIncrementButtonProps, getDecrementButtonProps } = useNumberInput({
-    step: 1,
-    defaultValue: 1,
-    min: 1,
-    max: 99,
-    precision: 0,
-  })
-
-  const inc = getIncrementButtonProps()
-  const dec = getDecrementButtonProps()
-  const input = getInputProps()
-
-  return (
-    <HStack>
-      <Button {...inc}>+</Button>
-      <Input {...input} />
-      <Button {...dec}>-</Button>
-    </HStack>
-  )
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async (ctx) => {
@@ -119,6 +85,7 @@ export default function StorePage({ store, products }: Props) {
               ml={index === 0 ? 2 : 0}
               mr={index === categories.length - 1 ? 2 : 0}
               variant={focus === category ? 'solid' : 'subtle'}
+              cursor={'pointer'}
               borderRadius={'md'}
               key={category}
               onClick={() => {
@@ -143,49 +110,16 @@ export default function StorePage({ store, products }: Props) {
                   </Text>
                 </Stack>
                 {group.items.map((product) => (
-                  <Card
+                  <ProductCard
                     key={product.id}
-                    cursor={'pointer'}
+                    product={product}
                     onClick={() => setModalProduct(product)}
-                  >
-                    <HStack p={2} alignItems={'flex-start'}>
-                      <VStack
-                        h={'100px'}
-                        w={'100px'}
-                        flexShrink={0}
-                        borderRadius={'md'}
-                        overflow={'hidden'}
-                      >
-                        <Image
-                          quality={50}
-                          src={'https://via.placeholder.com/150'}
-                          width={100}
-                          height={100}
-                          alt={`Picture of ${product.name}`}
-                        />
-                      </VStack>
-                      <Stack margin={0} padding={2}>
-                        <Stack spacing={1}>
-                          <Text fontWeight={'bold'}>{product.name}</Text>
-                          <Text fontSize="sm" color={'gray.500'} noOfLines={1}>
-                            {product.description}
-                          </Text>
-                        </Stack>
-                        <Text>{formatPrice(product.price)}</Text>
-                      </Stack>
-                    </HStack>
-                  </Card>
+                  />
                 ))}
               </Stack>
             ))}
           </Stack>
         </Container>
-        {/* TODO: enable when cart is implemented */}
-        {/* <Card width={'100%'} position={'fixed'} bottom={0}>
-          <HStack p={2}>
-            <Text>Footer</Text>
-          </HStack>
-        </Card> */}
       </main>
       <ProductModal product={modalProduct} onClose={() => setModalProduct(null)} />
     </>
