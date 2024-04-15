@@ -30,7 +30,7 @@ export const ProductModal = ({ onClose, product }: Props) => {
         <ModalCloseButton justifySelf={'center'} alignSelf={'center'} />
         <Stack width={'100%'}>
           <Image
-            src={'https://via.placeholder.com/150'}
+            src={product?.imageUrl ?? 'https://via.placeholder.com/150'}
             width={150}
             height={150}
             quality={100}

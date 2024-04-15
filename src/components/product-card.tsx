@@ -15,7 +15,7 @@ export const ProductCard = ({ product, onClick }: Props) => {
         <VStack h={'100px'} w={'100px'} flexShrink={0} borderRadius={'md'} overflow={'hidden'}>
           <Image
             quality={50}
-            src={'https://via.placeholder.com/150'}
+            src={product.imageUrl ?? 'https://via.placeholder.com/150'}
             width={100}
             height={100}
             alt={`Picture of ${product.name}`}

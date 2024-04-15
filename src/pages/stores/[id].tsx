@@ -57,7 +57,7 @@ export default function StorePage({ store, products }: Props) {
   return (
     <>
       <Head>
-        <title>{store.name} </title>
+        <title>{store.name}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
