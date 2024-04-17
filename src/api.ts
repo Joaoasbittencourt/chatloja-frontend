@@ -11,12 +11,14 @@ export const getStore = async (id: string): Promise<Store> => {
 
 export const getStoreProducts = async (id: string): Promise<Product[]> => {
   const res = await fetch(url(`/stores/${id}/products`))
-  return await res.json()
+  const json = await res.json()
+  return json.products
 }
 
 export const getStores = async (): Promise<Store[]> => {
   const res = await fetch(url('/stores'))
-  return await res.json()
+  const json = await res.json()
+  return json.stores
 }
 
 export const createStoreProduct = async (storeId: string, product: Omit<Product, 'id'>) => {

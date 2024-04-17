@@ -49,6 +49,8 @@ export default function Admin({ store, products }: Props) {
     initialData: products,
     queryKey: ['stores', store.id, 'products'],
     queryFn: () => getStoreProducts(store.id),
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   })
   const [openCreateProduct, setOpenCreateProduct] = useState(false)
   const [openDeleteProduct, setOpenDeleteProduct] = useState<Product | null>(null)

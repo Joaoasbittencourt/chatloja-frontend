@@ -28,7 +28,7 @@ const initialData = {
   name: '',
   category: '',
   description: '',
-  price: '1.53',
+  price: '10.00',
   imageUrl: null,
 }
 
@@ -43,7 +43,8 @@ export const CreateProductModal = ({ onClose, open, storeId }: Props) => {
       createStoreProduct(req.storeId, req.product),
     {
       onSuccess: async (res) => {
-        await queryClient.invalidateQueries('stores')
+        await queryClient.invalidateQueries(['stores', storeId, 'products'])
+        update(initialData)
         toast({ title: `Product ${res.name} created!` })
         onClose()
       },
